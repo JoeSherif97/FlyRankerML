@@ -1,0 +1,17 @@
+{
+  "action_counts": {
+    "improve": 14907,
+    "monitor": 12065,
+    "protect_and_refresh": 3015,
+    "rewrite": 13
+  },
+  "archetype_counts": {
+    "standard": 17939,
+    "hidden_gem": 8073,
+    "champion": 3015,
+    "weak_no_demand": 973
+  },
+  "median_impressions_90d": 731.0,
+  "pct_trend_down": 0.5420666666666667,
+  "snapshot_date": "2026-08-27"
+}
