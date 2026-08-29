@@ -288,18 +288,22 @@
     <span class="section-num">01</span>
     <h2>Abstract</h2>
     <p>
-      Content teams managing large page inventories have no systematic way to see which pages
-      behave alike, relying instead on gut feel and single-metric sorts. This study used K-Means
-      clustering on 30,000 structured content records — 90-day traffic, engagement, and freshness
-      metrics, with no article text — to test whether recurring behavioral archetypes exist beyond
-      a hand-written priority rule. Clustering found real but partial structure: a small,
-      high-value "champion" cluster and a near-invisible "weak-demand" cluster stood out clearly,
-      while the remaining two clusters were driven substantially by content type rather than
-      independent behavior. A grouped-by-client validation split showed the result was not simply
-      client memorization (holdout silhouette 0.278 vs. 0.294 on a random split), and a deliberate
-      leakage test confirmed the audit process was genuinely sensitive to contamination. The
-      output is a ranked, reason-coded action queue intended for human review — decision-support,
-      not an automated recommendation engine, and not a claim about causation or future performance.
+  FlyRank's own portfolio research documented a clear content lifecycle: pages peak around
+  61–90 days, decay sharply after 270 days, and refreshed old content can recover nearly to
+  peak health. That finding is a portfolio-level average — it tells a strategist that decay is
+  real, but not which of their own thousands of pages are approaching that cliff right now.
+  This study picks up exactly there: using 30,000 structured content records from one
+  representative portfolio slice, it tests whether K-Means clustering can turn FlyRank's
+  aggregate decay pattern into a page-level triage tool — a ranked, reason-coded queue a content
+  editor can act on this sprint, not just a chart proving decay exists in general. Clustering
+  found real but partial structure: a small, high-value "champion" cluster and a near-invisible
+  "weak-demand" cluster stood out clearly, while the remaining two clusters were driven
+  substantially by content type rather than independent behavior. A grouped-by-client validation
+  split showed the result was not simply client memorization (holdout silhouette 0.278 vs. 0.294
+  on a random split), and a deliberate leakage test confirmed the audit process was genuinely
+  sensitive to contamination. The output is a ranked action queue intended for human review —
+  decision-support, not an automated recommendation engine, and not a claim about causation or
+  future performance.
     </p>
   </section>
 
@@ -307,20 +311,25 @@
     <span class="section-num">02</span>
     <h2>Introduction</h2>
     <p>
-      A content strategist facing a backlog of thousands of pages needs to answer one question
-      every sprint: <em>where should limited editor time go first?</em> Single-metric sorts —
-      "top 10 by traffic" — miss interaction effects: a low-traffic page can be a hidden gem if
-      engagement is high, or genuinely dead weight if it isn't. A wrong call is not free. Pruning a
-      quietly-working page wastes rebuild cost later; leaving a declining page alone because it
-      still looks strong on one metric compounds lost traffic; rewriting a page that's actually
-      competing with a sibling page wastes hours on the wrong fix.
-    </p>
-    <p>
-      This study asks whether unsupervised clustering — grouping pages by structural similarity,
-      not by a predicted outcome — can add resolution beyond what a transparent, hand-written rule
-      already provides, and states plainly where that added resolution is genuine versus where it
-      is closer to rediscovering known content categories.
-    </p>
+  FlyRank's March 2026 portfolio study found that content decays predictably — health score
+  drops from a peak of 33.1 at 61–90 days to 14 by 271–365 days — and that refreshing mature
+  pages produces a measured 3.2x health boost. That's a powerful aggregate finding, but it
+  answers "does refresh work" at the portfolio level, not "which of my pages needs it first."
+  A strategist staring at a backlog of thousands of pages still has to answer that second
+  question by hand — gut feel, or a single-metric sort like "top 10 by traffic," which misses
+  interaction effects entirely: a low-traffic page can be a hidden gem if engagement is high, or
+  genuinely dead weight if it isn't.
+</p>
+<p>
+  This is the real cost FlyRank's own data makes visible: a wrong triage call is not free.
+  Pruning a quietly-working page wastes rebuild cost later; leaving a declining page alone
+  because it still looks strong on one metric compounds the exact loss FlyRank's decay curve
+  warns about; rewriting a page that's actually competing with a sibling page wastes hours on
+  the wrong fix. This study asks whether unsupervised clustering can turn FlyRank's
+  portfolio-level decay finding into a page-level prioritization tool, and states plainly where
+  the added resolution is genuine versus where it is closer to rediscovering known content
+  categories.
+</p>
   </section>
 
   <section id="data">
