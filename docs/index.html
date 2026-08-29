@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Structured Content Archetype Clustering — A Portfolio Lifecycle Study</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #F6F4EE;
+    --paper-raised: #FBFAF6;
+    --ink: #1B231F;
+    --ink-soft: #4A544E;
+    --growth: #2F6F6B;
+    --growth-soft: #E4EEEC;
+    --decay: #B5822C;
+    --decay-soft: #F5EBD9;
+    --rule: #D8D3C5;
+    --max-w: 780px;
+  }
+
+  * { box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    margin: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'IBM Plex Sans', sans-serif;
+    line-height: 1.65;
+    font-size: 17px;
+  }
+
+  h1, h2, h3 { font-family: 'Fraunces', serif; font-weight: 600; letter-spacing: -0.01em; color: var(--ink); }
+
+  .mono { font-family: 'IBM Plex Mono', monospace; }
+
+  a { color: var(--growth); text-decoration-thickness: 1px; }
+  a:hover { color: var(--decay); }
+
+  /* ---------- Lifecycle sparkline signature ---------- */
+  .sparkline-divider {
+    width: 100%;
+    height: 56px;
+    margin: 3.5rem 0;
+    display: block;
+  }
+
+  /* ---------- Layout shell ---------- */
+  .wrap {
+    max-width: var(--max-w);
+    margin: 0 auto;
+    padding: 0 1.5rem;
+  }
+
+  header.hero {
+    padding: 5rem 0 2rem;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .eyebrow {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--growth);
+    margin-bottom: 1rem;
+  }
+
+  h1.title {
+    font-size: clamp(2.1rem, 5vw, 3.1rem);
+    line-height: 1.08;
+    margin: 0 0 1.25rem;
+  }
+
+  .subtitle {
+    font-size: 1.15rem;
+    color: var(--ink-soft);
+    max-width: 640px;
+    margin: 0 0 2.5rem;
+  }
+
+  .hero-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 1.25rem;
+    margin-top: 2.5rem;
+  }
+
+  .stat {
+    border-left: 2px solid var(--growth);
+    padding-left: 0.9rem;
+  }
+  .stat.decay { border-left-color: var(--decay); }
+
+  .stat-num {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 1.5rem;
+    font-weight: 600;
+    display: block;
+  }
+  .stat-label {
+    font-size: 0.82rem;
+    color: var(--ink-soft);
+  }
+
+  nav.toc {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.85rem;
+    padding: 1.5rem 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem 1.3rem;
+    border-bottom: 1px solid var(--rule);
+  }
+  nav.toc a { color: var(--ink-soft); text-decoration: none; }
+  nav.toc a:hover { color: var(--growth); }
+
+  section {
+    padding: 3.5rem 0;
+    border-bottom: 1px solid var(--rule);
+  }
+  section:last-of-type { border-bottom: none; }
+
+  .section-num {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.8rem;
+    color: var(--ink-soft);
+    margin-bottom: 0.4rem;
+    display: block;
+  }
+
+  h2 { font-size: 1.7rem; margin: 0 0 1.3rem; }
+  h3 { font-size: 1.15rem; margin: 1.8rem 0 0.8rem; }
+
+  p { margin: 0 0 1.1rem; }
+
+  .callout {
+    background: var(--paper-raised);
+    border-left: 3px solid var(--growth);
+    padding: 1rem 1.3rem;
+    border-radius: 2px;
+    margin: 1.5rem 0;
+    font-size: 0.96rem;
+  }
+  .callout.warn { border-left-color: var(--decay); }
+  .callout strong { display: block; margin-bottom: 0.3rem; font-family: 'IBM Plex Mono', monospace; font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.08em; }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.92rem;
+    margin: 1.3rem 0;
+  }
+  th, td {
+    text-align: left;
+    padding: 0.55rem 0.7rem;
+    border-bottom: 1px solid var(--rule);
+  }
+  th {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--ink-soft);
+    font-weight: 500;
+  }
+  td.num, th.num { font-family: 'IBM Plex Mono', monospace; text-align: right; }
+
+  .chart-card {
+    background: var(--paper-raised);
+    border: 1px solid var(--rule);
+    border-radius: 4px;
+    padding: 1.3rem;
+    margin: 1.5rem 0;
+  }
+  .chart-caption {
+    font-size: 0.85rem;
+    color: var(--ink-soft);
+    margin-top: 0.6rem;
+  }
+
+  ul, ol { padding-left: 1.3rem; }
+  li { margin-bottom: 0.5rem; }
+
+  .action-list { list-style: none; padding-left: 0; }
+  .action-list li {
+    display: flex;
+    gap: 0.9rem;
+    align-items: baseline;
+    padding: 0.7rem 0;
+    border-bottom: 1px dashed var(--rule);
+  }
+  .action-rank {
+    font-family: 'IBM Plex Mono', monospace;
+    color: var(--growth);
+    font-weight: 600;
+    min-width: 1.6rem;
+  }
+
+  footer {
+    padding: 3rem 0 5rem;
+    font-size: 0.9rem;
+    color: var(--ink-soft);
+  }
+  footer a { color: var(--ink-soft); }
+
+  .badge {
+    display: inline-block;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    padding: 0.15rem 0.5rem;
+    border-radius: 3px;
+    background: var(--growth-soft);
+    color: var(--growth);
+    margin-left: 0.5rem;
+  }
+  .badge.limit { background: var(--decay-soft); color: var(--decay); }
+
+  @media (max-width: 600px) {
+    body { font-size: 16px; }
+    header.hero { padding: 3rem 0 1.5rem; }
+    section { padding: 2.5rem 0; }
+  }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="eyebrow">Data Report · FlyRank ML Internship Capstone</div>
+    <h1 class="title">Structured Content Archetype Clustering</h1>
+    <p class="subtitle">
+      What performance archetypes exist across a content inventory — and which pages should an
+      editor act on first? A behavioral clustering study on 30,000 pages, using only structured
+      metrics: no article text, no semantic claims, decision-support only.
+    </p>
+
+    <svg class="sparkline-divider" viewBox="0 0 780 56" preserveAspectRatio="none" aria-hidden="true">
+      <polyline points="0,40 90,18 180,10 270,14 360,26 450,38 540,46 630,40 690,22 780,12"
+        fill="none" stroke="#2F6F6B" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+      <polyline points="540,46 630,40 690,22 780,12"
+        fill="none" stroke="#B5822C" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="1 6"/>
+    </svg>
+
+    <div class="hero-stats">
+      <div class="stat">
+        <span class="stat-num">65.7%</span>
+        <span class="stat-label">of sessions from the top 10% of pages</span>
+      </div>
+      <div class="stat decay">
+        <span class="stat-num">54.2%</span>
+        <span class="stat-label">of pages trending down over 30 days</span>
+      </div>
+      <div class="stat">
+        <span class="stat-num">26.9%</span>
+        <span class="stat-label">low-traffic pages with above-median engagement</span>
+      </div>
+      <div class="stat decay">
+        <span class="stat-num">0.278</span>
+        <span class="stat-label">holdout silhouette, honest client-grouped split</span>
+      </div>
+    </div>
+  </div>
+</header>
+
+<nav class="toc">
+  <div class="wrap" style="display:flex; flex-wrap:wrap; gap:0.4rem 1.3rem;">
+    <a href="#abstract">Abstract</a>
+    <a href="#intro">Introduction</a>
+    <a href="#data">Data</a>
+    <a href="#methodology">Methodology</a>
+    <a href="#results">Results</a>
+    <a href="#limitations">Limitations</a>
+    <a href="#recommendations">Recommendations</a>
+    <a href="#repro">Reproducibility</a>
+    <a href="#credit">Data credit</a>
+  </div>
+</nav>
+
+<main class="wrap">
+
+  <section id="abstract">
+    <span class="section-num">01</span>
+    <h2>Abstract</h2>
+    <p>
+      Content teams managing large page inventories have no systematic way to see which pages
+      behave alike, relying instead on gut feel and single-metric sorts. This study used K-Means
+      clustering on 30,000 structured content records — 90-day traffic, engagement, and freshness
+      metrics, with no article text — to test whether recurring behavioral archetypes exist beyond
+      a hand-written priority rule. Clustering found real but partial structure: a small,
+      high-value "champion" cluster and a near-invisible "weak-demand" cluster stood out clearly,
+      while the remaining two clusters were driven substantially by content type rather than
+      independent behavior. A grouped-by-client validation split showed the result was not simply
+      client memorization (holdout silhouette 0.278 vs. 0.294 on a random split), and a deliberate
+      leakage test confirmed the audit process was genuinely sensitive to contamination. The
+      output is a ranked, reason-coded action queue intended for human review — decision-support,
+      not an automated recommendation engine, and not a claim about causation or future performance.
+    </p>
+  </section>
+
+  <section id="intro">
+    <span class="section-num">02</span>
+    <h2>Introduction</h2>
+    <p>
+      A content strategist facing a backlog of thousands of pages needs to answer one question
+      every sprint: <em>where should limited editor time go first?</em> Single-metric sorts —
+      "top 10 by traffic" — miss interaction effects: a low-traffic page can be a hidden gem if
+      engagement is high, or genuinely dead weight if it isn't. A wrong call is not free. Pruning a
+      quietly-working page wastes rebuild cost later; leaving a declining page alone because it
+      still looks strong on one metric compounds lost traffic; rewriting a page that's actually
+      competing with a sibling page wastes hours on the wrong fix.
+    </p>
+    <p>
+      This study asks whether unsupervised clustering — grouping pages by structural similarity,
+      not by a predicted outcome — can add resolution beyond what a transparent, hand-written rule
+      already provides, and states plainly where that added resolution is genuine versus where it
+      is closer to rediscovering known content categories.
+    </p>
+  </section>
+
+  <section id="data">
+    <span class="section-num">03</span>
+    <h2>Data</h2>
+    <p>
+      Source: the FlyRank ML Internship starter release — 30,000 pseudonymized content pages
+      across 32 clients, trailing-90-day Google Search Console and GA4-derived metrics. No client
+      names, raw URLs, or private queries appear anywhere in this dataset; all identifiers are
+      pseudonyms by design.
+    </p>
+    <table>
+      <tr><th>Field</th><th>Role</th><th>Why</th></tr>
+      <tr><td class="mono">content_id, client_id</td><td>Context</td><td>Grouping and splitting only, never a feature</td></tr>
+      <tr><td class="mono">trend_direction, trend_pct</td><td>Excluded as feature</td><td>Derived the same way a label would be — using it risks circularity</td></tr>
+      <tr><td class="mono">provider_used, model_used</td><td>Excluded</td><td>Production metadata, not audience-behavior signal</td></tr>
+      <tr><td class="mono">15 structured metrics + 4 missingness flags</td><td>Feature</td><td>Safe, structured, knowable at analysis time</td></tr>
+    </table>
+    <div class="callout">
+      <strong>Public-safe note</strong>
+      Missingness in <span class="mono">search_volume</span>, <span class="mono">word_count</span>
+      and related fields was confirmed to follow <span class="mono">content_type</span> almost
+      deterministically (e.g. 100% of one content type structurally lacks keyword-volume data) —
+      handled with explicit <span class="mono">has_-flags</span> rather than a blind fill, to avoid
+      injecting a fabricated signal.
+    </div>
+  </section>
+
+  <section id="methodology">
+    <span class="section-num">04</span>
+    <h2>Methodology</h2>
+    <h3>Task framing</h3>
+    <p>
+      Clustering, not classification: no observed future outcome exists in this snapshot to
+      predict, so the honest task is "what kinds of pages exist," evaluated by silhouette score
+      plus a human sense-check of whether cluster profiles match recognizable archetypes.
+    </p>
+    <h3>Baseline</h3>
+    <p>
+      A transparent, readable rule assigns every page one reason code
+      (<span class="mono">stale_declining_visible</span>, <span class="mono">declining_visible_fresh</span>,
+      <span class="mono">stale_visible_stable</span>, <span class="mono">low_priority</span>), scored as
+      <span class="mono">declining × visible × (1 + stale) × impressions_90d</span> — no fitted weights,
+      fully human-auditable.
+    </p>
+    <h3>Validation design</h3>
+    <p>
+      Split grouped by <span class="mono">client_id</span>, not random. Client size is highly
+      skewed (largest client holds 23% of all rows), so a random split lets the model implicitly
+      memorize a client's own scale. A seed-sensitivity check across five seeds confirmed this
+      matters: the resulting split ratio swung from 66/34 to 93/7 despite requesting 80/20 every
+      time, purely from which large client landed in holdout.
+    </p>
+    <h3>Leakage audit</h3>
+    <p>
+      Full checklist run against the final 19-field feature set: no label-derived fields, no
+      product-decision flags, no identifier columns, zero client overlap between fit and holdout.
+      A deliberate-injection test — adding <span class="mono">trend_pct</span>, a field known to be
+      derived the same way as the excluded label — raised holdout silhouette from 0.278 to 0.293,
+      confirming the audit harness genuinely detects leakage rather than passing by default.
+    </p>
+  </section>
+
+  <section id="results">
+    <span class="section-num">05</span>
+    <h2>Results</h2>
+    <div class="chart-card">
+      <img src="fig_action_distribution.png" alt="Bar chart: number of pages per recommended action — improve, monitor, protect and refresh, rewrite" style="width:100%; display:block; border-radius:2px;">
+      <p class="chart-caption">
+        Pages per recommended action, from the final ranked queue. <span class="mono">monitor</span>
+        and <span class="mono">improve</span> hold the bulk of the portfolio; the small
+        <span class="mono">rewrite</span> bucket (13 pages) is the highest-confidence,
+        highest-urgency group — visible, declining, and stale for 180+ days.
+      </p>
+    </div>
+
+    <table>
+      <tr><th>Metric</th><th>Baseline (4 hand-written buckets)</th><th>K-Means (k=4)</th></tr>
+      <tr><td>Groups found</td><td class="num">4</td><td class="num">4</td></tr>
+      <tr><td>Resolution inside baseline's largest bucket (21,085 rows)</td><td>1 undifferentiated bucket</td><td>Split across all 4 clusters</td></tr>
+      <tr><td>Validated metric</td><td>None (rule-based)</td><td class="num">Silhouette = 0.278 (holdout)</td></tr>
+    </table>
+
+    <div class="callout warn">
+      <strong>Read this carefully</strong>
+      A decision tree explaining the clusters found that <span class="mono">has_word_count</span>
+      — a near-perfect proxy for <span class="mono">content_type</span> — was the dominant driver
+      (importance 0.271) of cluster assignment, ahead of any performance signal. Two of the four
+      clusters are genuinely distinct behavioral groups (a 382-page champion cluster and a
+      2,469-page weak-demand cluster); the other two are better described as
+      "content-type-driven, with performance sub-splits inside," not four independently discovered
+      archetypes.
+    </div>
+  </section>
+
+  <section id="limitations">
+    <span class="section-num">06</span>
+    <h2>Limitations</h2>
+    <ul>
+      <li><strong>No article text.</strong> Clustering is behavioral, not semantic — archetype names describe traffic and engagement shape, not topic or meaning.</li>
+      <li><strong>Content-type confound.</strong> The strongest cluster-driving feature is a near-proxy for content type, not a purely new behavioral signal.</li>
+      <li><strong>No validated future outcome.</strong> The baseline's "declining" label is a defined rule, not an independently observed result — no precision@K against a real future window exists in this snapshot.</li>
+      <li><strong>Client concentration.</strong> One client holds 23% of rows; the priority queue's top candidates are disproportionately drawn from a small number of large clients.</li>
+      <li><strong>Small grouped holdout.</strong> Only 7 of 32 clients fall in the validation holdout; one unusual client could swing the reported silhouette.</li>
+      <li><strong>Cross-sectional data, one snapshot.</strong> No causal claims are supported anywhere in this work — only observed, directional, decision-support structure.</li>
+    </ul>
+  </section>
+
+  <section id="recommendations">
+    <span class="section-num">07</span>
+    <h2>Ranked recommendations</h2>
+    <p>The output of this work is a reason-coded action queue for human review, not an automated system:</p>
+    <ol class="action-list">
+      <li><span class="action-rank">01</span><div><strong>Protect and refresh champions first.</strong> The highest-value pages are often also the most neglected relative to their value — losing one costs the most.</div></li>
+      <li><span class="action-rank">02</span><div><strong>Rewrite the small, high-confidence stale-and-declining group.</strong> Still visible, losing ground, untouched 180+ days — the clearest actionable signal in the queue.</div></li>
+      <li><span class="action-rank">03</span><div><strong>Improve the larger declining-but-fresh group.</strong> A page that's still declining despite a recent update needs investigation, not an assumed rewrite.</div></li>
+      <li><span class="action-rank">04</span><div><strong>Monitor the rest.</strong> Includes weak-demand pages where average position is statistically unreliable due to a tiny impression base — do not prune on position alone.</div></li>
+    </ol>
+    <div class="callout">
+      <strong>What should never be automated</strong>
+      Auto-publishing or auto-editing content from this queue; auto-pruning or auto-merging pages
+      based on a "monitor" label; committing budget from the priority score as if it were a
+      validated economic model; or treating a page's cluster/archetype as a permanent identity fed
+      into other systems. Every recommendation here requires human review before action.
+    </div>
+  </section>
+
+  <section id="repro">
+    <span class="section-num">08</span>
+    <h2>Reproducibility</h2>
+    <p>
+      All notebooks live in this repository under <span class="mono">work/notebooks/</span>. The
+      exported action queue, review sample, and monitoring baseline are in
+      <span class="mono">work/outputs/</span>. Random seeds are fixed and stated in each notebook;
+      rerunning top-to-bottom reproduces every table and figure on this page.
+    </p>
+  </section>
+
+  <section id="credit">
+    <span class="section-num">09</span>
+    <h2>Acknowledgments &amp; data credit</h2>
+    <p>
+      Built on the FlyRank ML Internship dataset. Data credit and program information:
+      <a href="https://flyrank.ai" target="_blank" rel="noopener">flyrank.ai</a>.
+    </p>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <p>Structured Content Archetype Clustering — a decision-support study, not a causal claim. Observed, directional, decision-support only.</p>
+  </div>
+</footer>
+
+</body>
+</html>
